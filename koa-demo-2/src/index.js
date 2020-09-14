@@ -30,6 +30,7 @@ const middleware = compose([
 ])
 
 if (!isDevMode) {
+  // 生产模式 使用压缩
   app.use(compress())
 }
 
