@@ -17,6 +17,9 @@ module.exports = {
     "semi": 0,
     "space-before-function-paren": 0,
     "comma-dangle": 0,
-    "no-trailing-spaces": 0
+    "no-trailing-spaces": 0,
+    "quote-props": 0,
+    "eol-last": 0,
+    "import/first": 0
   }
 }

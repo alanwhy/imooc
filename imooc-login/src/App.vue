@@ -2,20 +2,20 @@
   <div id="app">
     <div class="layui-container">
       <form class="layui-form layui-form-pane" action>
-        <div class="layui-form-item" :class="{'form-group--error':$v.name.$error}">
+        <div class="layui-form-item">
           <label class="layui-form-label">用户名</label>
           <div class="layui-input-inline">
             <input
-              v-model.trim="$v.name.$model"
+              v-validate="'required|email'"
+              v-model.trim="name"
               type="text"
-              name="title"
+              name="name"
               placeholder="请输入标题"
               autocomplete="off"
               class="layui-input"
             />
           </div>
-          <div class="error layui-form-mid" v-if="!$v.name.required">用户名不得为空</div>
-          <div class="error layui-form-mid" v-if="!$v.name.email">用户名输入格式错误</div>
+          <div class="error layui-form-mid">{{errors.first('name')}}</div>
         </div>
         <div class="layui-form-item">
           <label class="layui-form-label">密码</label>
@@ -35,8 +35,8 @@
           <div class="layui-input-inline">
             <input
               v-model="code"
-              type="password"
-              name="password"
+              type="text"
+              name="code"
               required
               lay-verify="required"
               placeholder="输入验证码"
@@ -55,7 +55,6 @@
 
 <script>
 import axios from "axios";
-import { required, email } from "vuelidate/lib/validators";
 export default {
   name: "app",
   data() {
@@ -66,18 +65,6 @@ export default {
       code: "",
       errorMsg: [],
     };
-  },
-  validations: {
-    name: {
-      required,
-      email,
-    },
-    password: {
-      required,
-    },
-    code: {
-      required,
-    },
   },
   methods: {
     getCaptcha() {
@@ -127,13 +114,5 @@ input {
 .svg {
   position: relative;
   top: -15px;
-}
-.error {
-  display: none;
-}
-.form-group--error {
-  .error {
-    display: block;
-  }
 }
 </style>
