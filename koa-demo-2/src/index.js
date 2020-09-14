@@ -19,7 +19,7 @@ import compress from "koa-compose"
 
 const app = new koa()
 
-const isDevMode = process.env.NODE_ENV = 'production' ? false : true
+const isDevMode = process.env.NODE_ENV === 'production' ? false : true
 
 const middleware = compose([
   koaBody(),
