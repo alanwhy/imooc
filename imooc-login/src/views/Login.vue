@@ -14,38 +14,44 @@
             <form method="post">
               <div class="layui-form-item">
                 <label for="L_email" class="layui-form-label">用户名</label>
-                <div class="layui-input-inline">
-                  <input type="text" name="username" v-model="username" v-validate="'required|email'" placeholder="请输入用户名" autocomplete="off" class="layui-input" />
-                </div>
-                <div class="layui-form-mid">
-                  <span style="color: #c00;">{{errors.first('username')}}</span>
-                </div>
+                <ValidationProvider rules="required|email" v-slot="{ errors }">
+                  <div class="layui-input-inline">
+                    <input type="text" name="账户" v-model="username" placeholder="请输入账户" autocomplete="off" class="layui-input" />
+                  </div>
+                  <div class="layui-form-mid">
+                    <span style="color: #c00">{{ errors[0] }}</span>
+                  </div>
+                </ValidationProvider>
               </div>
               <div class="layui-form-item">
                 <label for="L_pass" class="layui-form-label">密码</label>
-                <div class="layui-input-inline">
-                  <input type="password" name="password" v-model="password" v-validate="'required|min:6'" placeholder="请输入密码" autocomplete="off" class="layui-input" />
-                </div>
-                <div class="layui-form-mid">
-                  <span style="color: #c00;">{{errors.first('password')}}</span>
-                </div>
+                <ValidationProvider rules="required|min:6|max:16" v-slot="{ errors }">
+                  <div class="layui-input-inline">
+                    <input type="password" name="密码" v-model="password" placeholder="请输入密码" autocomplete="off" class="layui-input" />
+                  </div>
+                  <div class="layui-form-mid">
+                    <span style="color: #c00">{{ errors[0] }}</span>
+                  </div>
+                </ValidationProvider>
               </div>
               <div class="layui-form-item">
                 <div class="layui-row">
                   <label for="L_vercode" class="layui-form-label">验证码</label>
-                  <div class="layui-input-inline">
-                    <input type="text" name="code" v-model="code" v-validate="'required|length:4'" placeholder="请输入验证码" autocomplete="off" class="layui-input" />
-                  </div>
-                  <div class>
-                    <span class="svg" style="color: #c00;" @click="_getCode()" v-html="svg"></span>
-                  </div>
-                </div>
-                <div class="layui-form-mid">
-                  <span style="color: #c00;">{{errors.first('code')}}</span>
+                  <ValidationProvider rules="required|length:4" v-slot="{ errors }">
+                    <div class="layui-input-inline">
+                      <input type="text" name="验证码" v-model="code" placeholder="请输入验证码" autocomplete="off" class="layui-input" />
+                    </div>
+                    <div>
+                      <span class="svg" v-html="svg" @click="_getCode()"></span>
+                    </div>
+                    <div class="layui-form-mid">
+                      <span style="color: #c00;">{{ errors[0] }}</span>
+                    </div>
+                  </ValidationProvider>
                 </div>
               </div>
               <div class="layui-form-item">
-                <button class="layui-btn">立即登录</button>
+                <button class="layui-btn" lay-filter="*" lay-submit>立即登录</button>
                 <span style="padding-left:20px;">
                   <router-link :to="{name: 'forget'}">忘记密码？</router-link>
                 </span>
@@ -68,8 +74,19 @@
 import {
   getCode
 } from "@/api/login";
+import {
+  ValidationProvider
+} from "vee-validate";
+import "@/rules/required.js";
+import "@/rules/email.js";
+import "@/rules/min_max.js";
+import "@/rules/length.js";
+
 export default {
   name: "login",
+  components: {
+    ValidationProvider,
+  },
   data() {
     return {
       username: "",
@@ -84,10 +101,10 @@ export default {
   methods: {
     _getCode() {
       getCode().then((res) => {
-        console.log(res);
-        if (res.code === 200) {
-          this.svg = res.data;
+        if (res.code !== 200) {
+          return;
         }
+        this.svg = res.data;
       });
     },
   },
