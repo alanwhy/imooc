@@ -21,6 +21,8 @@ module.exports = {
     "quote-props": 0,
     "eol-last": 0,
     "import/first": 0,
-    "no-multiple-empty-lines": 0
+    "no-multiple-empty-lines": 0,
+    "no-unused-vars": 0,
+    "comma-spacing": 0
   }
 }
