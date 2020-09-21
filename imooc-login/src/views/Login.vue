@@ -72,7 +72,7 @@
                   </validation-provider>
                 </div>
                 <div class="layui-form-item">
-                  <button class="layui-btn">立即登录</button>
+                  <button class="layui-btn" type="button" @click="submit()">立即登录</button>
                   <span style="padding-left:20px;">
                     <router-link :to="{name: 'forget'}">忘记密码？</router-link>
                   </span>
@@ -103,7 +103,7 @@
 
 <script>
 import { ValidationProvider } from "vee-validate";
-import { getCode } from "@/api/login";
+import { getCode, login } from "@/api/login";
 import { v4 } from "uuid";
 export default {
   name: "login",
@@ -135,6 +135,18 @@ export default {
       getCode(sid).then((res) => {
         if (res.code === 200) {
           this.svg = res.data;
+        }
+      });
+    },
+    submit() {
+      login({
+        username: this.username,
+        password: this.password,
+        code: this.code,
+        sid: this.$store.state.sid,
+      }).then((res) => {
+        if (res.code === 200) {
+          console.log(res);
         }
       });
     },
