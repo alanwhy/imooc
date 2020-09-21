@@ -75,8 +75,8 @@
 
 <script>
 export default {
-  name: 'header'
-}
+  name: "Header",
+};
 </script>
 
 <style lang="scss" scoped>

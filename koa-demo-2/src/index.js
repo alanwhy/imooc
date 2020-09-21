@@ -14,7 +14,6 @@ import jsonUtil from "koa-json"
 import cors from "@koa/cors"
 // 整合koa的中间件
 import compose from 'koa-compose'
-
 import compress from "koa-compose"
 
 const app = new koa()

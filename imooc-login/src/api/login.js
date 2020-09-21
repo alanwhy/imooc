@@ -1,8 +1,12 @@
 import axios from '@/utils/request'
 
 
-const getCode = async () => {
-  return axios.get('/getCaptcha')
+const getCode = async (sid) => {
+  return axios.get('/getCaptcha', {
+    params: {
+      sid
+    }
+  })
 }
 
 const forget = option => {
@@ -11,4 +15,4 @@ const forget = option => {
   })
 }
 
-export { getCode,forget }
+export { getCode, forget }
