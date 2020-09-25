@@ -24,8 +24,8 @@ const forget = option => {
 }
 
 /**
- * 
- * @param {*} loginInfo 
+ * 登录接口
+ * @param {*} loginInfo 用户登录信息
  */
 const login = (loginInfo) => {
   return axios.post('/login', {
