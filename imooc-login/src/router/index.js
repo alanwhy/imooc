@@ -1,34 +1,37 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 
-
-const Login = () => import(/* webpackChunkName: 'login' */ './../views/Login.vue')
-const Reg = () => import(/* webpackChunkName: 'reg' */ './../views/Reg.vue')
+const Login = () => import(/* webpackChunkName: 'login' */ './views/Login.vue')
+const Reg = () => import(/* webpackChunkName: 'reg' */ './views/Reg.vue')
 const Forget = () =>
-  import(/* webpackChunkName: 'forget' */ './../views/Forget.vue')
+  import(/* webpackChunkName: 'forget' */ './views/Forget.vue')
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
-const routes = [
-  {
-    path: '/login',
-    name: 'login',
-    component: Login
-  },
-  {
-    path: '/reg',
-    name: 'reg',
-    component: Reg
-  },
-  {
-    path: '/forget',
-    name: 'forget',
-    component: Forget
-  }
-]
-
-const router = new VueRouter({
-  routes
+export default new Router({
+  routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/reg',
+      name: 'reg',
+      component: Reg,
+      // 注册页面不能直接访问 如果直接访问就返回login页面
+      beforeEnter: (to, from, next) => {
+        if (from.name === 'login') {
+          next()
+        } else {
+          next('/login')
+        }
+      }
+    },
+    {
+      path: '/forget',
+      name: 'forget',
+      component: Forget
+    }
+  ]
 })
-
-export default router
