@@ -111,7 +111,7 @@
 <script>
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { getCode, login } from '@/api/login'
-import uuid from 'uuid/v4'
+import uuid from 'uuid'
 export default {
   name: 'login',
   components: {
@@ -131,7 +131,7 @@ export default {
     if (localStorage.getItem('sid')) {
       sid = localStorage.getItem('sid')
     } else {
-      sid = uuid()
+      sid = uuid.v4()
       localStorage.setItem('sid', sid)
     }
     this.$store.commit('setSid', sid)
@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     _getCode () {
-      let sid = this.$store.state.sid
+      const sid = this.$store.state.sid
       getCode(sid).then((res) => {
         if (res.code === 200) {
           this.svg = res.data

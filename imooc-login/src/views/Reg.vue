@@ -130,7 +130,7 @@ export default {
   },
   methods: {
     _getCode() {
-      let sid = this.$store.state.sid
+      const sid = this.$store.state.sid
       getCode(sid).then((res) => {
         if (res.code === 200) {
           this.svg = res.data
